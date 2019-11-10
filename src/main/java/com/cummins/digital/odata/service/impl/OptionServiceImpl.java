@@ -56,9 +56,12 @@ public class OptionServiceImpl implements OptionService {
             selectValue = "*";
         }
 
-        final String filterSqlStr = parseOptionNew("$filter", filterValue);
+        String filterSqlStr = "";
+        if (!StringUtils.isEmpty(filterValue)) {
+            filterSqlStr = " WHERE " + parseOptionNew("$filter", filterValue);
+        }
 
-        String fullSQL = "SELECT " + selectValue + " FROM " + tbName + " " + tbName + " WHERE " + filterSqlStr;
+        String fullSQL = "SELECT " + selectValue + " FROM " + tbName + " " + tbName + filterSqlStr;
 
         return fullSQL;
 
